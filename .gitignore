@@ -1,0 +1,6 @@
+# localenv
+.env
+.env.db
+
+
+./app/Pipfile.lock
