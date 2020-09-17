@@ -19,14 +19,14 @@ services:
         env_file: .env
         # 接続するサービスを指定
         depends_on:
-            - postgres
+            - mariadb
 
-    postgres:
+    mariadb:
         # 公式からイメージをpull
-        image: postgres:11.4-alpine
+        image: mariadb:10.5
         # データベースの永続化
         volumes:
-            - postgres_data:/var/lib/postgresql/data
+            - mariadb_data:/var/lib/mysql
         env_file: .env.db
 
     nginx:
@@ -40,5 +40,5 @@ services:
 
 # トップレベルに書く「名前付きvolumes」は複数サービスから参照できる
 volumes:
-    postgres_data:
+    mariadb_data:
     static_volume:

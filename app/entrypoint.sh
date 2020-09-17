@@ -1,14 +1,14 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]
+if [ "$DATABASE_HOST" = "mariadb" ]
 then
-    echo "Waiting for postgres..."
+    echo "Waiting for mariadb..."
 
     while ! nc -z $DATABASE_HOST $DATABASE_PORT; do
       sleep 0.1
     done
 
-    echo "PostgreSQL started"
+    echo "mariadb started"
 fi
 
 python manage.py flush --no-input

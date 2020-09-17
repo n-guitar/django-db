@@ -18,30 +18,32 @@ services:
             # 1ならデバックモード
             - DEBUG=1
             - SECRET_KEY="#@-atrgft+#-6k&k=_3-=0!*mfw75-ly&1o(42+bv$ku+3w1qv"
-            - DATABASE_ENGINE=django.db.backends.postgresql
+            - DATABASE_ENGINE=django.db.backends.mysql
             - DATABASE_DB=django_db
             - DATABASE_USER=django_db_user
             - DATABASE_PASSWORD=password1234
-            - DATABASE_HOST=postgres
-            - DATABASE_PORT=5432
+            - DATABASE_HOST=mariadb
+            - DATABASE_PORT=3306
         # 接続するサービスを指定
         depends_on:
-            - postgres
+            - mariadb
 
-    postgres:
+    mariadb:
         # 公式からイメージをpull
-        image: postgres:11.4-alpine
+        image: mariadb:10.5
         # データベースの永続化
         # ホストのディレクトリにマウントしない様に、先頭に`./`をつけない
         volumes:
-            - postgres_data:/var/lib/postgresql/data
+            - mariadb_data:/var/lib/mysql
         # su権限を持つ、指定されたユーザーと同じ名前のデータベースを作成
         # valueはdjangoサービスで指定したものと同じ様に記載する
         environment:
-            - POSTGRES_USER=django_db_user
-            - POSTGRES_PASSWORD=password1234
-            - POSTGRES_DB=django_db
-
+            - MYSQL_ROOT_PASSWORD=password1234
+            - MYSQL_DATABASE=django_db
+            - MYSQL_USER=django_db_user
+            - MYSQL_PASSWORD=password1234
+        expose:
+            - 3306
 # トップレベルに書く「名前付きvolumes」は複数サービスから参照できる
 volumes:
-    postgres_data:
+    mariadb_data:
