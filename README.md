@@ -1,1 +1,1 @@
-# django-bot
+# django-db
