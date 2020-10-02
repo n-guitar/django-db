@@ -1,4 +1,4 @@
-# django-bot
+# django-db
 
 # dev start
 ```bash
